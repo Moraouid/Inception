@@ -52,14 +52,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/moraouid/data/mariadb
+      device: /home/sel-abbo/data/mariadb
 
   wordpress_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/moraouid/data/wordpress
+      device: /home/sel-abbo/data/wordpress
 
 secrets:
   db_password:
