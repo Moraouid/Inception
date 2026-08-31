@@ -41,7 +41,7 @@ services:
       - wordpress_data:/var/www/html
     env_file:
       - .env
-  
+
 networks:
   inception_network:
     driver: bridge
