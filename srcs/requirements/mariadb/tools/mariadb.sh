@@ -1,17 +1,20 @@
 #!/bin/bash
 
-service mariadb start && sleep 2 
+MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
+MYSQL_ROOT_PASSWORD=$(cat "$MYSQL_ROOT_PASSWORD_FILE")
 
-mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+service mariadb start && sleep 2
 
-mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$(cat "$MYSQL_PASSWORD_FILE")';"
+mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
 
-mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$(cat "$MYSQL_PASSWORD_FILE")';"
+mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
 
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat "$MYSQL_ROOT_PASSWORD_FILE")';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$(cat "$MYSQL_PASSWORD_FILE")';"
 
-mysql -e "FLUSH PRIVILEGES;"
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
-mysqladmin -u root -p"$(cat "$MYSQL_ROOT_PASSWORD_FILE")" shutdown
+mysql -u root -e "FLUSH PRIVILEGES;"
 
-exec mysqld_safe
+mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
+
+exec mysqld
