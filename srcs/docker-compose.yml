@@ -2,7 +2,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb/
-    restart: on-failure
+    restart: always
     networks:
       - inception_network
     volumes:
@@ -16,7 +16,9 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
-    restart: on-failure
+    restart: always
+    depends_on:
+      - mariadb
     networks:
       - inception_network
     volumes:
@@ -32,7 +34,9 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx/
-    restart: on-failure
+    restart: always
+    depends_on:
+      - wordpress
     networks:
       - inception_network
     ports:
