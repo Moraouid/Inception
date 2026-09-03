@@ -1,5 +1,5 @@
 COMPOSE_FILE = srcs/docker-compose.yml
-DATA_DIR = /home/sel-abbo/data
+DATA_DIR = /home/$(USER)/data
 
 all: 
 	@echo "Creating data directories..."
@@ -7,6 +7,7 @@ all:
 	@mkdir -p $(DATA_DIR)/wordpress
 	@echo "Building Inception infrastructure..."
 	docker compose -f $(COMPOSE_FILE) up -d --build
+	docker ps -a
 
 down:
 	@echo "Shutting down containers..."

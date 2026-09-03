@@ -10,7 +10,7 @@ Inception is a Docker-based infrastructure project that deploys a small WordPres
 - **WordPress**: the PHP-FPM application container. On its first start, it downloads and configures WordPress with WP-CLI, then creates an administrator and an author account.
 - **MariaDB**: the database server used by WordPress.
 
-The goal is to build the infrastructure from custom Dockerfiles and make the services communicate through Docker Compose, rather than running the whole stack in one container. Persistent WordPress files and MariaDB data are stored outside the containers through Docker volumes backed by directories under `/home/sel-abbo/data`.
+The goal is to build the infrastructure from custom Dockerfiles and make the services communicate through Docker Compose, rather than running the whole stack in one container. Persistent WordPress files and MariaDB data are stored outside the containers through Docker volumes backed by directories under `/home/$USER/data`.
 
 ## Technical Choices
 
@@ -28,7 +28,7 @@ The services use the user-defined bridge network `inception_network`. Containers
 
 ### Docker Volumes versus Bind Mounts
 
-The Compose file declares named volumes, `mariadb_data` and `wordpress_data`, for container-managed persistence. Their local driver options bind them to `/home/sel-abbo/data/mariadb` and `/home/sel-abbo/data/wordpress`, so the data remains available after containers are recreated. A direct bind mount is simpler when a host path must be edited or shared explicitly; a Docker-managed volume is more portable and easier for Docker to manage. This project combines both ideas: named-volume semantics in Compose with explicit host-backed storage required by the 42 setup.
+The Compose file declares named volumes, `mariadb_data` and `wordpress_data`, for container-managed persistence. Their local driver options bind them to `/home/$USER/data/mariadb` and `/home/$USER/data/wordpress`, so the data remains available after containers are recreated. A direct bind mount is simpler when a host path must be edited or shared explicitly; a Docker-managed volume is more portable and easier for Docker to manage. This project combines both ideas: named-volume semantics in Compose with explicit host-backed storage required by the 42 setup.
 
 ## Instructions
 
@@ -36,7 +36,7 @@ The Compose file declares named volumes, `mariadb_data` and `wordpress_data`, fo
 
 - Linux with Docker Engine and the Docker Compose plugin (`docker compose`).
 - GNU Make.
-- Permission to create `/home/sel-abbo/data` and, for `make fclean`, permission to run the configured `sudo rm` commands.
+- Permission to create `/home/$USER/data` and, for `make fclean`, permission to run the configured `sudo rm` commands.
 - A hosts-file entry resolving the configured domain to the local machine:
 
   ```text
