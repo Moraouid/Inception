@@ -12,6 +12,7 @@ all:
 down:
 	@echo "Shutting down containers..."
 	docker compose -f $(COMPOSE_FILE) down
+	docker ps -a
 
 clean:
 	@echo "Stopping and removing containers, networks, and images..."
@@ -19,8 +20,7 @@ clean:
 
 fclean: clean
 	@echo "Deep cleaning local volumes and Docker system..."
-	@sudo rm -rf $(DATA_DIR)/mariadb
-	@sudo rm -rf $(DATA_DIR)/wordpress
+	@sudo rm -rf $(DATA_DIR)
 	docker system prune -af --volumes
 
 re: fclean all
