@@ -1,18 +1,29 @@
 COMPOSE_FILE = srcs/docker-compose.yml
 DATA_DIR = /home/$(USER)/data
 
-all: 
+all:
 	@echo "Creating data directories..."
 	@mkdir -p $(DATA_DIR)/mariadb
 	@mkdir -p $(DATA_DIR)/wordpress
 	@echo "Building Inception infrastructure..."
 	docker compose -f $(COMPOSE_FILE) up -d --build
-	docker ps -a
 
 down:
 	@echo "Shutting down containers..."
 	docker compose -f $(COMPOSE_FILE) down
-	docker ps -a
+	docker compose -f $(COMPOSE_FILE) ps --all
+
+ps:
+	@echo "Displaying container status..."
+	docker compose -f $(COMPOSE_FILE) ps --all
+
+images:
+	@echo "Displaying images..."
+	docker compose -f $(COMPOSE_FILE) images
+
+logs:
+	@echo "Displaying logs..."
+	docker compose -f $(COMPOSE_FILE) logs
 
 clean:
 	@echo "Stopping and removing containers, networks, and images..."
@@ -25,4 +36,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all down clean fclean re
+.PHONY: all down ps images logs clean fclean re
