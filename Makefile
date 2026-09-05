@@ -25,6 +25,10 @@ logs:
 	@echo "Displaying logs..."
 	docker compose -f $(COMPOSE_FILE) logs
 
+shell:
+	@if [ -z "$(s)" ]; then echo "Usage: make shell s=<service>"; exit 1; fi
+	docker compose -f $(COMPOSE_FILE) exec $(s) bash
+
 clean:
 	@echo "Stopping and removing containers, networks, and images..."
 	docker compose -f $(COMPOSE_FILE) down --rmi all -v
@@ -36,4 +40,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all down ps images logs clean fclean re
+.PHONY: all down ps images logs shell clean fclean re

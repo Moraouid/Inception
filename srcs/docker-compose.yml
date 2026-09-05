@@ -31,7 +31,6 @@ services:
       - db_password
       - admin_password
       - user_password
-
   
   nginx:
     container_name: nginx
