@@ -13,6 +13,10 @@ down:
 	docker compose -f $(COMPOSE_FILE) down
 	docker compose -f $(COMPOSE_FILE) ps --all
 
+up:
+	@echo "Starting containers..."
+	docker compose -f $(COMPOSE_FILE) up -d
+
 ps:
 	@echo "Displaying container status..."
 	docker compose -f $(COMPOSE_FILE) ps --all
@@ -40,4 +44,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all down ps images logs shell clean fclean re
+.PHONY: all down up ps images logs shell clean fclean re
