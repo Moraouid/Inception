@@ -20,6 +20,16 @@ if [ ! -f wp-config.php ]; then
 
     wp user create "$USER" "$USER_EMAIL" --role=author --user_pass="$USER_PASSWORD" --allow-root
 
+    ################ Redis Configuration ################
+    wp config set WP_REDIS_HOST redis --allow-root
+
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
+
+    wp plugin install redis-cache --activate --allow-root
+
+    wp redis enable --allow-root
+    ####################################################
+
 fi
 
 chown -R www-data:www-data /var/www/html

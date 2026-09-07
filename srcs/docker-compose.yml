@@ -45,8 +45,16 @@ services:
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
-    env_file:
-      - .env
+
+  redis:
+    container_name: redis
+    image: redis
+    build: ./requirements/bonus/redis/
+    restart: always
+    networks:
+      - inception_network
+    ports:
+      - "6379:6379"
 
 networks:
   inception_network:
