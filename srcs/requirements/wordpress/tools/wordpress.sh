@@ -1,12 +1,12 @@
 #!/bin/bash
 
+set -e
+
 MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
 ADMIN_PASSWORD=$(cat "$ADMIN_PASSWORD_FILE")
 USER_PASSWORD=$(cat "$USER_PASSWORD_FILE")
 
-while ! mysqladmin ping -h"mariadb" --silent; do
-    sleep 1
-done
+sleep 5
 
 cd /var/www/html
 
