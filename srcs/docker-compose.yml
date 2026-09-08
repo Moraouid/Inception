@@ -56,6 +56,23 @@ services:
     ports:
       - "6379:6379"
 
+  ftp:
+    container_name: ftp
+    image: ftp
+    build: ./requirements/bonus/ftp/
+    restart: always
+    networks:
+      - inception_network
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
+    secrets:
+      - ftp_password
+
 networks:
   inception_network:
     driver: bridge
@@ -84,3 +101,5 @@ secrets:
     file: ../secrets/admin_password.txt
   user_password:
     file: ../secrets/user_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt

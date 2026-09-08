@@ -27,7 +27,7 @@ images:
 
 logs:
 	@echo "Displaying logs..."
-	docker compose -f $(COMPOSE_FILE) logs
+	docker compose -f $(COMPOSE_FILE) logs -f
 
 shell:
 	@if [ -z "$(s)" ]; then echo "Usage: make shell s=<service>"; exit 1; fi
