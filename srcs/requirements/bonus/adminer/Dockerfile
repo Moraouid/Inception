@@ -9,4 +9,6 @@ COPY tools/adminer.sh /adminer.sh
 
 RUN chmod +x /adminer.sh
 
+EXPOSE 9000
+
 CMD ["/adminer.sh"]
