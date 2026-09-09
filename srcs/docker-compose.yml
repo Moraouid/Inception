@@ -45,6 +45,7 @@ services:
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
+      - nginx_data:/var/log/nginx
 
   redis:
     container_name: redis
@@ -93,6 +94,18 @@ services:
     networks:
       - inception_network
 
+  goaccess:
+    container_name: goaccess
+    image: goaccess
+    build: ./requirements/bonus/goaccess/
+    restart: always
+    depends_on:
+      - nginx
+    networks:
+      - inception_network
+    volumes:
+      - nginx_data:/var/log/nginx
+
 networks:
   inception_network:
     driver: bridge
@@ -111,6 +124,8 @@ volumes:
       type: none
       o: bind
       device: /home/$USER/data/wordpress
+
+  nginx_data:
 
 secrets:
   db_password:
