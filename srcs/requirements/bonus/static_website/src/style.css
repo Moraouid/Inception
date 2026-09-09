@@ -1,0 +1,114 @@
+:root {
+    --bg-color: #0c0c0c;
+    --text-color: #00ff00;
+    --border-style: 1px solid #00ff00;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+header {
+    border-bottom: var(--border-style);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* The blinking cursor effect */
+h1::after {
+    content: "_";
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-top: 5px;
+}
+
+h2 {
+    border-bottom: 1px dashed var(--text-color);
+    padding-bottom: 5px;
+    margin-top: 40px;
+    text-transform: uppercase;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.skill-card {
+    background-color: var(--bg-color);
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border: var(--border-style);
+    transition: all 0.1s ease;
+    cursor: crosshair;
+}
+
+/* Invert colors on hover like highlighting text in a terminal */
+.skill-card:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: var(--bg-color);
+    margin-bottom: 15px;
+    padding: 20px;
+    border: var(--border-style);
+    position: relative;
+}
+
+/* Adds a terminal prompt bracket before list items */
+li::before {
+    content: "[+] ";
+    font-weight: bold;
+}
+
+li strong {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: var(--border-style);
+    padding-top: 20px;
+}
