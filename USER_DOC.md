@@ -2,13 +2,21 @@
 
 ## Services
 
-This project provides a WordPress website through three Docker services:
+This project provides a WordPress website through three core Docker services:
 
 - **Nginx** receives HTTPS requests on port `443` and serves the website.
 - **WordPress** runs the PHP application through PHP-FPM.
 - **MariaDB** stores the WordPress database.
 
-The services communicate through the private Docker network `inception_network`. Only Nginx is published to the host.
+The bonus services are also started with the project:
+
+- **Redis** provides WordPress object caching.
+- **FTP** provides file transfer access to the WordPress files.
+- **Adminer** provides MariaDB administration.
+- **Static website** serves the portfolio page.
+- **GoAccess** provides a live Nginx access-log dashboard.
+
+The services communicate through the private Docker network `inception_network`. Nginx, FTP, and Redis publish the ports required for their respective access methods; the other services are reached through Nginx or the Docker network.
 
 ## Start the Project
 
@@ -51,6 +59,16 @@ https://sel-abbo.42.fr
 ```
 
 The project uses a self-signed certificate, so the browser may display a certificate warning. This is expected for local development.
+
+Bonus web pages are available at:
+
+```text
+https://sel-abbo.42.fr/portfolio
+https://sel-abbo.42.fr/goaccess/
+https://sel-abbo.42.fr/adminer.php
+```
+
+FTP clients can connect to `sel-abbo.42.fr` on port `21` using the configured `FTP_USER` and the password in `secrets/ftp_password.txt`. Passive data connections use ports `21100` through `21110`. Redis is available on port `6379` for Docker or host clients that require it.
 
 The WordPress administration panel is available at:
 
@@ -95,4 +113,4 @@ docker compose -f srcs/docker-compose.yml logs -f wordpress
 docker compose -f srcs/docker-compose.yml logs -f mariadb
 ```
 
-A healthy basic setup should show running `nginx`, `wordpress`, and `mariadb` containers. If the website is unavailable, check that Docker is running, the containers are running, the hosts-file entry is present, and port `443` is not already in use.
+A healthy basic setup should show running `nginx`, `wordpress`, `mariadb`, and the enabled bonus containers. If the website is unavailable, check that Docker is running, the containers are running, the hosts-file entry is present, and port `443` is not already in use.

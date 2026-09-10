@@ -51,11 +51,19 @@ The equivalent Compose command, after the data directories exist, is:
 docker compose -f srcs/docker-compose.yml up -d --build
 ```
 
-The Compose file builds three images from `srcs/requirements/`:
+The Compose file builds the three core images from `srcs/requirements/`:
 
 - `mariadb`: MariaDB server and database initialization.
 - `wordpress`: WP-CLI, WordPress initialization, and PHP-FPM on port `9000`.
 - `nginx`: HTTPS reverse proxy on port `443`.
+
+The bonus services are defined under `srcs/requirements/bonus/`:
+
+- `redis`: Redis cache service for WordPress.
+- `ftp`: FTP access to the shared WordPress volume.
+- `adminer`: MariaDB administration interface.
+- `static_website`: portfolio website served through Nginx.
+- `goaccess`: analytics dashboard generated from the shared Nginx access log.
 
 Nginx forwards PHP requests to the `wordpress` service. WordPress connects to MariaDB using the service name `mariadb` on the Docker network.
 
@@ -130,5 +138,11 @@ The Makefile creates these directories before launch. Because the data is outsid
     └── requirements/
         ├── mariadb/
         ├── nginx/
-        └── wordpress/
+        ├── wordpress/
+        └── bonus/
+            ├── adminer/
+            ├── ftp/
+            ├── goaccess/
+            ├── redis/
+            └── static_website/
 ```

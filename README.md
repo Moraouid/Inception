@@ -4,11 +4,19 @@
 
 ## Description
 
-Inception is a Docker-based infrastructure project that deploys a small WordPress website using three independent services:
+Inception is a Docker-based infrastructure project that deploys a small WordPress website using three core services:
 
 - **Nginx**: the HTTPS entry point, using a self-signed TLS certificate and forwarding PHP requests.
 - **WordPress**: the PHP-FPM application container. On its first start, it downloads and configures WordPress with WP-CLI, then creates an administrator and an author account.
 - **MariaDB**: the database server used by WordPress.
+
+The project also includes the following bonus services:
+
+- **Redis**: object caching for WordPress.
+- **FTP**: file transfer access to the WordPress volume.
+- **Adminer**: a web-based MariaDB administration tool.
+- **Static website**: a separate portfolio site served through Nginx.
+- **GoAccess**: a live dashboard generated from the Nginx access logs.
 
 The goal is to build the infrastructure from custom Dockerfiles and make the services communicate through Docker Compose, rather than running the whole stack in one container. Persistent WordPress files and MariaDB data are stored outside the containers through Docker volumes backed by directories under `/home/$USER/data`.
 
@@ -62,13 +70,21 @@ From the repository root, run:
 make
 ```
 
-This creates the persistent data directories, builds the three images, and starts the services in detached mode. Once the containers are ready, open:
+This creates the persistent data directories, builds all service images, and starts the services in detached mode. Once the containers are ready, open:
 
 ```text
 https://sel-abbo.42.fr
 ```
 
 The certificate is self-signed, so a browser warning is expected during local development. The first startup may take longer while WordPress is downloaded and installed.
+
+The bonus services are available through the following endpoints:
+
+| Endpoint | Service |
+| --- | --- |
+| `https://sel-abbo.42.fr/portfolio` | Static portfolio website |
+| `https://sel-abbo.42.fr/goaccess/` | GoAccess analytics dashboard |
+| `https://sel-abbo.42.fr/adminer.php` | Adminer database interface |
 
 ### Make targets
 
@@ -99,7 +115,8 @@ docker compose -f srcs/docker-compose.yml logs -f
     └── requirements/
         ├── mariadb/                  # MariaDB image and initialization script
         ├── nginx/                    # HTTPS reverse proxy and certificate setup
-        └── wordpress/                # WordPress, WP-CLI, and PHP-FPM setup
+        ├── wordpress/                # WordPress, WP-CLI, and PHP-FPM setup
+        └── bonus/                    # Optional Redis, FTP, Adminer, portfolio, and GoAccess services
 ```
 
 ## Resources
