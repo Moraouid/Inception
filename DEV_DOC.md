@@ -69,6 +69,25 @@ Nginx forwards PHP requests to the `wordpress` service. WordPress connects to Ma
 
 ## Container and Volume Management
 
+### Makefile Targets
+
+Run these targets from the repository root:
+
+| Command | Purpose |
+| --- | --- |
+| `make` or `make all` | Create `/home/$USER/data/{mariadb,wordpress}`, build images, and start the stack. |
+| `make up` | Start existing containers without rebuilding images. |
+| `make down` | Stop and remove containers and the Compose network. |
+| `make ps` | Display all project containers and their current state. |
+| `make images` | Display images associated with the Compose project. |
+| `make logs` | Follow logs from all services. |
+| `make shell s=<service>` | Open a Bash shell in a running service container. |
+| `make clean` | Remove containers, project images, named volumes, and the network. |
+| `make fclean` | Run `clean`, delete host-backed data, and prune Docker resources. |
+| `make re` | Run `fclean`, then rebuild and start the stack. |
+
+`make clean`, `make fclean`, and `make re` can delete Docker resources. `make fclean` also requires `sudo` because it removes the host-backed data directories.
+
 Show the service state:
 
 ```sh
