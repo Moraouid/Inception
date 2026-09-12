@@ -39,6 +39,9 @@ services:
     restart: always
     depends_on:
       - wordpress
+      - static_website
+      - goaccess
+      - adminer
     networks:
       - inception_network
     ports:
@@ -89,8 +92,6 @@ services:
     image: static_website
     build: ./requirements/bonus/static_website/
     restart: always
-    depends_on:
-      - nginx
     networks:
       - inception_network
 
@@ -99,8 +100,6 @@ services:
     image: goaccess
     build: ./requirements/bonus/goaccess/
     restart: always
-    depends_on:
-      - nginx
     networks:
       - inception_network
     volumes:
