@@ -57,8 +57,6 @@ services:
     restart: always
     networks:
       - inception_network
-    ports:
-      - "6379:6379"
 
   ftp:
     container_name: ftp

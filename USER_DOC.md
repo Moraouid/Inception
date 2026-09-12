@@ -10,13 +10,13 @@ This project provides a WordPress website through three core Docker services:
 
 The bonus services are also started with the project:
 
-- **Redis** provides WordPress object caching.
+- **Redis** provides WordPress object caching through the private Docker network.
 - **FTP** provides file transfer access to the WordPress files.
 - **Adminer** provides MariaDB administration.
 - **Static website** serves the portfolio page.
 - **GoAccess** provides a live Nginx access-log dashboard.
 
-The services communicate through the private Docker network `inception_network`. Nginx, FTP, and Redis publish the ports required for their respective access methods; the other services are reached through Nginx or the Docker network.
+The services communicate through the private Docker network `inception_network`. Nginx and FTP publish the ports required for external access; the other services, including Redis, are reached through Nginx or the Docker network.
 
 ## Start the Project
 
@@ -68,7 +68,7 @@ https://sel-abbo.42.fr/goaccess/
 https://sel-abbo.42.fr/adminer.php
 ```
 
-FTP clients can connect to `sel-abbo.42.fr` on port `21` using the configured `FTP_USER` and the password in `secrets/ftp_password.txt`. Passive data connections use ports `21100` through `21110`. Redis is available on port `6379` for Docker or host clients that require it.
+FTP clients can connect to `sel-abbo.42.fr` on port `21` using the configured `FTP_USER` and the password in `secrets/ftp_password.txt`. Passive data connections use ports `21100` through `21110`. Redis is available to Docker services on the private network at `redis:6379`.
 
 The WordPress administration panel is available at:
 
