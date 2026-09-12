@@ -2,9 +2,9 @@
 
 set -e
 
-MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
-ADMIN_PASSWORD=$(cat "$ADMIN_PASSWORD_FILE")
-USER_PASSWORD=$(cat "$USER_PASSWORD_FILE")
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
+ADMIN_PASSWORD=$(cat /run/secrets/admin_password)
+USER_PASSWORD=$(cat /run/secrets/user_password)
 
 sleep 5
 

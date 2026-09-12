@@ -1,7 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update && apt-get install -y goaccess python3 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y goaccess python3
 
 COPY ./tools/goaccess.sh /goaccess.sh
 

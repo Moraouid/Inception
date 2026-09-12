@@ -2,7 +2,7 @@
 
 set -e
 
-FTP_PASS=$(cat "$FTP_PASSWORD_FILE")
+FTP_PASS=$(cat /run/secrets/ftp_password)
 
 if ! id "$FTP_USER" &>/dev/null; then
 

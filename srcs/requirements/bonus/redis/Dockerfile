@@ -1,7 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update && apt-get install -y redis-server \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y redis-server
     
 COPY ./tools/redis.sh /redis.sh
     

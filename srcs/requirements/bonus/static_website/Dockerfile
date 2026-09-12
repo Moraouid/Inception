@@ -1,7 +1,6 @@
 FROM debian:bookworm
 
-RUN apt update && apt install -y python3 \
-    && mkdir -p /var/www/html
+RUN apt update && apt install -y python3
 
 COPY ./src /var/www/html
 
